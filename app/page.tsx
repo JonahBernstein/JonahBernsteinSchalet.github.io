@@ -175,13 +175,13 @@ export default function Portfolio() {
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-lg shadow-lg">
-                <img src="/images/Seoni_Farmers.JPEG" alt="Seoni Farmers" className="w-full h-64 object-cover"/>
+                <img src="/images/seoni_farmers.JPEG" alt="Seoni Farmers" className="w-full h-64 object-cover"/>
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50">
                   <p className="text-[#FFFECB] text-sm">ERW Deployments on Rice Paddies in Madhya Pradesh</p>
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-lg shadow-lg">
-                <img src="/images/BearLake.JPEG" alt="Bear Lake research" className="w-full h-64 object-cover"/>
+                <img src="/images/bearlake.JPEG" alt="Bear Lake research" className="w-full h-64 object-cover"/>
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50">
                   <p className="text-[#FFFECB] text-sm">Research team at Bear Lake, Utah</p>
                 </div>
