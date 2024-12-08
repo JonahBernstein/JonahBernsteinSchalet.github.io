@@ -16,23 +16,22 @@ export default function Portfolio() {
   ];
 
   const projects = [
-    {
-      title: 'Enhanced Rock Weathering at Mati Carbon',
-      description: 'Leading research and development of enhanced rock weathering techniques for carbon dioxide removal, focusing on optimizing mineral selection, application methods, and monitoring protocols.',
-      tags: ['Carbon Removal', 'ERW', 'Climate Solutions'],
-    },
-    {
-      title: 'Geology-Biology Research at Brown',
-      description: 'Conducted interdisciplinary research combining geological and biological approaches to understand earth systems and environmental processes.',
-      tags: ['Academia', 'Research', 'Earth Sciences'],
-    },
-    {
-      title: 'Climate Solutions Implementation',
-      description: 'Working on practical applications of enhanced rock weathering in agricultural settings to promote both carbon capture and soil health.',
-      tags: ['Climate Change', 'Agriculture', 'Sustainability'],
-    },
+      {
+        title: 'Enhanced Rock Weathering at Mati Carbon',
+        description: 'Assisting with research and development of novel approaches to MRV, optimizing analytical methodologies, consulting on feedstock quality and suitability',
+        tags: ['Carbon Removal', 'ERW', 'Climate Solutions'],
+      },
+      {
+        title: 'Biogeochemistry Research at Brown',
+        description: 'With the Ibarra Terrestrial Biogeochemistry group at Brown, I was involved in a number of projects focused on the geological carbon cycle with respect to rock weathering, carbon export at the catchement scale, and hydrological systems',
+        tags: ['Academia', 'Research', 'Earth Sciences'],
+      },
+      {
+        title: 'Senior Thesis: Post-fire environmental geochemistry in Oregon',
+        description: 'My Senior thesis was a coupled geospatial and geochemical analysis of soil and water conditions in post-fire landscapes in Oregon. I presented my findings at 2 conferences.',
+        tags: ['Wildfire', 'Soil Carbon', 'Rock Weathering'],
+      },
   ];
-
   const skills = [
     'Geochemical Analysis', 'Enhanced Rock Weathering', 'Field Research',
     'Data Analysis', 'Geographic Information Systems', 'Geological Sampling',
