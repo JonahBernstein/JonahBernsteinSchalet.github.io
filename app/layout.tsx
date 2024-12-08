@@ -13,10 +13,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export const metadata = {
-  title: 'Jonah Bernstein-Schalet | Geochemist',
-  description: 'Research Scientist specializing in Enhanced Rock Weathering',
-}
+export const metadata: Metadata = {
+  title: "Jonah Bernstein-Schalet",
+  description: "Portfolio Website",
+};
 
 export default function RootLayout({
   children,
@@ -33,3 +33,4 @@ export default function RootLayout({
     </html>
   );
 }
+
