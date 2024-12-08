@@ -134,13 +134,13 @@ export default function Portfolio() {
             <div className="max-w-3xl mx-auto text-[#FEF6B3]">
               <p className="mb-4">
                 I'm a Research Scientist at Mati Carbon, where I help with research, MRV development across the global south, and analytical geochemistry
-                for carbon dioxide removal. With a Bachelor's degree in Geology-Biology from Brown University, I combine my expertise 
+                for carbon dioxide removal. With a Bachelors degree in Geology-Biology from Brown University, I combine my expertise 
                 in earth sciences and my experience in inorganic and organic geochemical laboratories to help implement and develop practical solutions to the challenges of enhanced rock weathering.
               </p>
               <p>
                 As part of the science team, my current roles include analytical data quality control, MRV development for CDR calculations, consulting on active research projects, 
                 and interfacing with certifiers regarding the scientific aspects of our operation. As a part of the Enhanced Rock Weathering industry, my goal is to bring accountability, integrity, 
-                and an unwavering commitment to the geochemical principles I've been educated on.
+                and an unwavering commitment to the geochemical principles I have been educated on.
               </p>
             </div>
           </div>
@@ -154,19 +154,19 @@ export default function Portfolio() {
               <div className="relative overflow-hidden rounded-lg shadow-lg">
                 <img src="/images/CrookedRiver.JPEG" alt="Crooked River Canyon" className="w-full h-64 object-cover"/>
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50">
-                  <p className="text-[#FFFECB] text-sm">Field research in Oregon's Crooked River Canyon</p>
+                  <p className="text-[#FFFECB] text-sm">Field research in Oregons Crooked River Canyon</p>
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-lg shadow-lg">
                 <img src="/images/DischargeMeter.JPEG" alt="Stream discharge measurement" className="w-full h-64 object-cover"/>
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50">
-                  <p className="text-[#FFFECB] text-sm">Stream discharge measurement in Oregon's waterways</p>
+                  <p className="text-[#FFFECB] text-sm">Stream discharge measurement in Oregons waterways</p>
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-lg shadow-lg">
                 <img src="/images/Fire.JPEG" alt="Post-fire forest study" className="w-full h-64 object-cover"/>
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50">
-                  <p className="text-[#FFFECB] text-sm">Investigating post-fire impacts in Oregon's forests</p>
+                  <p className="text-[#FFFECB] text-sm">Investigating post-fire impacts in Oregon forests</p>
                 </div>
               </div>
               <div className="relative overflow-hidden rounded-lg shadow-lg">
