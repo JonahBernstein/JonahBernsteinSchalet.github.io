@@ -132,7 +132,7 @@ export default function Portfolio() {
             <h2 className="text-3xl font-bold text-center mb-8 text-[#FFFECB]">About Me</h2>
             <div className="max-w-3xl mx-auto text-[#FEF6B3]">
               <p className="mb-4">
-                I'm a Research Scientist at Mati Carbon, where I help with research, MRV development across the global south, and analytical geochemistry
+                I am a Research Scientist at Mati Carbon, where I help with research, MRV development across the global south, and analytical geochemistry
                 for carbon dioxide removal. With a Bachelors degree in Geology-Biology from Brown University, I combine my expertise 
                 in earth sciences and my experience in inorganic and organic geochemical laboratories to help implement and develop practical solutions to the challenges of enhanced rock weathering.
               </p>
