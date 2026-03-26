@@ -189,7 +189,7 @@ export default function Portfolio() {
 
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <p className="text-sm uppercase tracking-[0.25em] text-[#C2693A] font-medium mb-6">
-              Research Scientist · Geochemist
+              Geochemist
             </p>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-2 leading-tight">
               Jonah
@@ -198,8 +198,7 @@ export default function Portfolio() {
             </h1>
             <div className="w-16 h-0.5 bg-[#C2693A] mx-auto mt-6 mb-8" />
             <p className="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto mb-12 leading-relaxed">
-              Enhanced Rock Weathering Specialist at Mati Carbon, applying
-              geochemical expertise to scalable carbon dioxide removal.
+              Carbon Dioxide Removal 
             </p>
             <div className="flex justify-center gap-4">
               <a
