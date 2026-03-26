@@ -4,21 +4,19 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const photos = [
-  { src: '/images/Fire.JPEG', caption: 'Oregon' },
   { src: '/images/CrookedRiver.JPEG', caption: 'Crooked River Canyon, Oregon' },
-  { src: '/images/WaterSampling.JPEG', caption: 'Oregon' },
-  { src: '/images/DischargeMeter.JPEG', caption: 'Oregon' },
-  { src: '/images/ethiopia_quarry.jpg', caption: 'Ethiopia' },
   { src: '/images/seoni_rice.jpg', caption: 'Madhya Pradesh, India' },
   { src: '/images/tnz_rice.jpg', caption: 'Tanzania' },
-  { src: '/images/tnz_dirt.jpg', caption: 'Tanzania' },
-  { src: '/images/zambia_dirt_profile.jpg', caption: 'Zambia' },
-  { src: '/images/zambia_dirt.jpg', caption: 'Zambia' },
+  { src: '/images/Fire.JPEG', caption: 'Oregon' },
   { src: '/images/kolhapur_flood_basalt.jpg', caption: 'Kolhapur, India' },
+  { src: '/images/zambia_dirt.jpg', caption: 'Zambia' },
+  { src: '/images/WaterSampling.JPEG', caption: 'Oregon' },
   { src: '/images/kolhapur_olivine.jpg', caption: 'Kolhapur, India' },
+  { src: '/images/ethiopia_quarry.jpg', caption: 'Ethiopia' },
+  { src: '/images/DischargeMeter.JPEG', caption: 'Oregon' },
+  { src: '/images/soil_profile_birbhum.jpg', caption: 'Birbhum, India' },
   { src: '/images/kolhapur_saprolite.jpg', caption: 'Kolhapur, India' },
   { src: '/images/kolhapur_pinenut.jpg', caption: 'Kolhapur, India' },
-  { src: '/images/soil_profile_birbhum.jpg', caption: 'Birbhum, India' },
   { src: '/images/gpm_geode.jpg', caption: '' },
 ];
 
