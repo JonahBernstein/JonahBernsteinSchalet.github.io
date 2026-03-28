@@ -84,42 +84,17 @@ const publications = [
 
 export default function Portfolio() {
   const [current, setCurrent] = useState(0);
-  const [next, setNext] = useState<number | null>(null);
-  const [transitioning, setTransitioning] = useState(false);
-  const DURATION = 800; // ms — must match CSS duration below
+  const currentRef = React.useRef(0);
 
   const changeTo = (newIdx: number) => {
-    if (transitioning || newIdx === current) return;
-    setNext(newIdx);
-    // Let the new image render at opacity-0 first, then trigger the fade
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => setTransitioning(true));
-    });
-    setTimeout(() => {
-      setCurrent(newIdx);
-      setNext(null);
-      setTransitioning(false);
-    }, DURATION);
+    currentRef.current = newIdx;
+    setCurrent(newIdx);
   };
-
-  const currentRef = React.useRef(current);
-  currentRef.current = current;
-  const transitioningRef = React.useRef(transitioning);
-  transitioningRef.current = transitioning;
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (transitioningRef.current) return;
       const newIdx = (currentRef.current + 1) % photos.length;
-      setNext(newIdx);
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => setTransitioning(true));
-      });
-      setTimeout(() => {
-        setCurrent(newIdx);
-        setNext(null);
-        setTransitioning(false);
-      }, DURATION);
+      changeTo(newIdx);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
@@ -144,49 +119,36 @@ export default function Portfolio() {
 
       {/* Gallery */}
       <section className="relative h-screen w-full overflow-hidden bg-black">
-        {/* Current image — always fully visible, fades out when transitioning */}
+        {/* Filmstrip — all images in a row, slides on translateX */}
         <div
-          className="absolute inset-0 transition-opacity ease-in-out"
+          className="absolute inset-0 flex"
           style={{
-            transitionDuration: `${DURATION}ms`,
-            opacity: transitioning ? 0 : 1,
+            width: `${photos.length * 100}%`,
+            transform: `translateX(-${(current / photos.length) * 100}%)`,
+            transition: 'transform 700ms cubic-bezier(0.77, 0, 0.175, 1)',
           }}
         >
-          <Image
-            src={photos[current].src}
-            alt={photos[current].caption || 'Field photograph'}
-            fill
-            priority
-            className="object-cover"
-          />
+          {photos.map((photo, i) => (
+            <div key={i} className="relative h-full" style={{ width: `${100 / photos.length}%` }}>
+              <Image
+                src={photo.src}
+                alt={photo.caption || 'Field photograph'}
+                fill
+                priority={i === 0}
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
 
-        {/* Next image — renders invisible, fades in when transitioning */}
-        {next !== null && (
-          <div
-            className="absolute inset-0 transition-opacity ease-in-out"
-            style={{
-              transitionDuration: `${DURATION}ms`,
-              opacity: transitioning ? 1 : 0,
-            }}
-          >
-            <Image
-              src={photos[next].src}
-              alt={photos[next].caption || 'Field photograph'}
-              fill
-              className="object-cover"
-            />
-          </div>
-        )}
-
-        {/* Caption — shows the incoming photo's caption during transition */}
-        {(photos[next ?? current].caption) && (
+        {/* Caption */}
+        {photos[current].caption && (
           <div className="absolute bottom-10 left-8 z-10">
             <p
               className="text-white text-sm italic"
               style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
             >
-              {photos[next ?? current].caption}
+              {photos[current].caption}
             </p>
           </div>
         )}
@@ -214,7 +176,7 @@ export default function Portfolio() {
               key={i}
               onClick={() => changeTo(i)}
               className={`w-1.5 h-1.5 rounded-full transition-all ${
-                i === (next ?? current) ? 'bg-white' : 'bg-white/35'
+                i === current ? 'bg-white' : 'bg-white/35'
               }`}
               aria-label={`Go to photo ${i + 1}`}
             />
