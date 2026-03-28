@@ -83,30 +83,49 @@ const publications = [
 ];
 
 export default function Portfolio() {
-  const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
+  const [current, setCurrent] = useState(0);
+  const [next, setNext] = useState<number | null>(null);
+  const [transitioning, setTransitioning] = useState(false);
+  const DURATION = 800; // ms — must match CSS duration below
 
   const changeTo = (newIdx: number) => {
-    setVisible(false);
+    if (transitioning || newIdx === current) return;
+    setNext(newIdx);
+    // Let the new image render at opacity-0 first, then trigger the fade
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setTransitioning(true));
+    });
     setTimeout(() => {
-      setIdx(newIdx);
-      setVisible(true);
-    }, 450);
+      setCurrent(newIdx);
+      setNext(null);
+      setTransitioning(false);
+    }, DURATION);
   };
+
+  const currentRef = React.useRef(current);
+  currentRef.current = current;
+  const transitioningRef = React.useRef(transitioning);
+  transitioningRef.current = transitioning;
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setVisible(false);
+      if (transitioningRef.current) return;
+      const newIdx = (currentRef.current + 1) % photos.length;
+      setNext(newIdx);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setTransitioning(true));
+      });
       setTimeout(() => {
-        setIdx((prev) => (prev + 1) % photos.length);
-        setVisible(true);
-      }, 450);
+        setCurrent(newIdx);
+        setNext(null);
+        setTransitioning(false);
+      }, DURATION);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
 
-  const prev = () => changeTo((idx - 1 + photos.length) % photos.length);
-  const next = () => changeTo((idx + 1) % photos.length);
+  const prevPhoto = () => changeTo((current - 1 + photos.length) % photos.length);
+  const nextPhoto = () => changeTo((current + 1) % photos.length);
 
   return (
     <div className="min-h-screen bg-white text-[#1C1917]">
@@ -125,46 +144,63 @@ export default function Portfolio() {
 
       {/* Gallery */}
       <section className="relative h-screen w-full overflow-hidden bg-black">
+        {/* Current image — always fully visible, fades out when transitioning */}
         <div
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            visible ? 'opacity-100' : 'opacity-0'
-          }`}
+          className="absolute inset-0 transition-opacity ease-in-out"
+          style={{
+            transitionDuration: `${DURATION}ms`,
+            opacity: transitioning ? 0 : 1,
+          }}
         >
           <Image
-            src={photos[idx].src}
-            alt={photos[idx].caption || 'Field photograph'}
+            src={photos[current].src}
+            alt={photos[current].caption || 'Field photograph'}
             fill
             priority
             className="object-cover"
           />
         </div>
 
-        {/* Caption */}
-        {photos[idx].caption && (
+        {/* Next image — renders invisible, fades in when transitioning */}
+        {next !== null && (
           <div
-            className={`absolute bottom-10 left-8 z-10 transition-opacity duration-500 ${
-              visible ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="absolute inset-0 transition-opacity ease-in-out"
+            style={{
+              transitionDuration: `${DURATION}ms`,
+              opacity: transitioning ? 1 : 0,
+            }}
           >
+            <Image
+              src={photos[next].src}
+              alt={photos[next].caption || 'Field photograph'}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
+
+        {/* Caption — shows the incoming photo's caption during transition */}
+        {(photos[next ?? current].caption) && (
+          <div className="absolute bottom-10 left-8 z-10">
             <p
               className="text-white text-sm italic"
               style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
             >
-              {photos[idx].caption}
+              {photos[next ?? current].caption}
             </p>
           </div>
         )}
 
         {/* Prev / Next */}
         <button
-          onClick={prev}
+          onClick={prevPhoto}
           className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-colors text-xl px-3 py-4 select-none"
           aria-label="Previous photo"
         >
           &#8592;
         </button>
         <button
-          onClick={next}
+          onClick={nextPhoto}
           className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white/50 hover:text-white transition-colors text-xl px-3 py-4 select-none"
           aria-label="Next photo"
         >
@@ -178,7 +214,7 @@ export default function Portfolio() {
               key={i}
               onClick={() => changeTo(i)}
               className={`w-1.5 h-1.5 rounded-full transition-all ${
-                i === idx ? 'bg-white' : 'bg-white/35'
+                i === (next ?? current) ? 'bg-white' : 'bg-white/35'
               }`}
               aria-label={`Go to photo ${i + 1}`}
             />
