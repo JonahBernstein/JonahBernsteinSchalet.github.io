@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jonah Bernstein-Schalet</title>
+<meta name="description" content="Jonah Bernstein-Schalet — figures, photographs, publications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Major+Mono+Display&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=13">
+</head>
+<body>
+
+<!-- paper grain over everything -->
+<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+
+<!-- a line taken for a walk, drawn by the scroll -->
+<svg class="walk" aria-hidden="true"><path id="walk-path"/></svg>
+
+<header class="chrome">
+  <a class="mark" href="#surface">jonah bernstein-schalet</a>
+  <nav>
+    <a href="#surface">00</a><a href="#record">01</a><a href="#oregon">02</a><a href="#acid">03</a><a href="#india">04</a><a href="#tracer">05</a><a href="#fires">06</a>
+  </nav>
+</header>
+
+<aside class="core" aria-hidden="true">
+  <div class="core-col">
+    <i style="--c:var(--river)"></i><i style="--c:var(--label)"></i><i style="--c:var(--teal)"></i><i style="--c:var(--sulfur)"></i><i style="--c:var(--rust)"></i><i style="--c:var(--haze)"></i><i style="--c:var(--moss)"></i>
+  </div>
+  <div class="core-tick"><span id="core-scale">10⁷ m</span></div>
+</aside>
+
+<main>
+
+<!-- 00 · the world's rivers, falling into New York -->
+<section id="surface" class="scrolly dark" data-scale="10⁷ m" style="--len:560vh">
+  <div class="sticky">
+    <canvas id="rivers-ny" class="river-canvas"></canvas>
+    <div class="hero">
+      <h1>Jonah<br><em>Bernstein-</em><br>Schalet</h1>
+      <p class="lede">I think about how we can maximize human action for planetary good. I also think about the meaning of these terms: truth, reason, science, practical knowledge.</p>
+    </div>
+    <p class="descend">↓</p>
+  </div>
+</section>
+
+<!-- 01 · things I've done -->
+<section id="record" class="record" data-scale="1 person">
+  <div class="record-head">
+    <h2>Strata</h2>
+    <p class="question">Things I've done</p>
+  </div>
+  <ol class="column" id="column"></ol>
+  <p class="record-foot">Things I think about</p>
+</section>
+
+<!-- 02 · across the continent into the Little Deschutes -->
+<section id="oregon" class="scrolly dark" data-scale="10⁴ m" style="--len:380vh">
+  <div class="sticky"><canvas id="rivers-or" class="river-canvas"></canvas></div>
+</section>
+
+<figure class="strata" data-img="img/discharge-meter.jpg" data-dir="x">
+  <div class="strata-stage"></div>
+</figure>
+
+<!-- 03 · sulfuric acid -->
+<section id="acid" class="scrolly ink" data-scale="∅ — parameter space" style="--len:520vh">
+  <div class="sticky">
+    <canvas id="joint"></canvas>
+    <p class="q">How do we account for sulfuric acid in carbon cycle frameworks?</p>
+    <div class="acid-readout" id="acid-readout"></div>
+  </div>
+</section>
+
+<!-- 04 · central India, then the weathering profile -->
+<section id="india" class="scrolly umber" data-scale="10⁴ m" style="--len:380vh">
+  <div class="sticky"><canvas id="rivers-in" class="river-canvas"></canvas></div>
+</section>
+
+<section id="profile" class="scrolly umber" data-scale="10⁰ m" style="--len:520vh">
+  <div class="sticky">
+    <div class="profile-stage" id="profile-stage">
+      <img id="profile-img" src="img/weathering-profile.jpg" alt="A road cut through weathered basalt: red soil on top, broken dark rock below.">
+      <canvas id="profile-lines"></canvas>
+    </div>
+    <p class="q">Can rock dissolve fast enough to sustain a viable carbon removal strategy?</p>
+  </div>
+</section>
+
+<!-- 05 · small tracer signals -->
+<section id="tracer" class="scrolly paper" data-scale="1 bit" style="--len:440vh">
+  <div class="sticky center right">
+    <svg id="tracer-plot" class="tracer" viewBox="0 0 1000 560"></svg>
+    <p class="q">Sometimes, noise can deceive us <a class="q-link" href="https://matisandbox.com" target="_blank" rel="noopener">matisandbox.com →</a></p>
+  </div>
+</section>
+
+<figure class="strata" data-img="img/seoni-rice.jpg" data-dir="y">
+  <div class="strata-stage"></div>
+</figure>
+
+<!-- 06 · rice: seven years of burning, month by month -->
+<section id="fires" class="scrolly night" data-scale="10⁶ m" style="--len:520vh">
+  <div class="sticky">
+    <canvas id="fire-map"></canvas>
+    <p class="q">Rice is the most interesting plant on earth. How can we get the most of it?</p>
+    <p class="fire-month" id="fire-month">2019·01</p>
+    <p class="fire-unit">MODIS fire pixel-days since Jan 2019</p>
+  </div>
+</section>
+
+<figure class="strata" data-img="img/frame-0016-snow.jpg" data-dir="x">
+  <div class="strata-stage"></div>
+</figure>
+
+<figure class="coda">
+  <img src="img/label.jpg" alt="A typewritten orange label on white paper reading: my life has a life of its own. Below it, marbled blue-green paper.">
+  <figcaption><a href="#" class="write">write to me →</a></figcaption>
+</figure>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="js/scroll.js?v=13"></script>
+<script src="js/rivers.js?v=13"></script>
+<script src="js/acid.js?v=13"></script>
+<script src="js/profile.js?v=13"></script>
+<script src="js/tracer.js?v=13"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="js/fires.js?v=13"></script>
+<script src="js/record.js?v=13"></script>
+</body>
+</html>
