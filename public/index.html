@@ -8,9 +8,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Major+Mono+Display&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=13">
+<link rel="stylesheet" href="css/site.css?v=25">
+<!-- the gate is skipped when arriving at a section link -->
+<script>if (!location.hash) document.documentElement.classList.add("gated");</script>
 </head>
 <body>
+
+<!-- the gate -->
+<div class="portal" id="portal">
+  <canvas id="portal-canvas" aria-hidden="true"></canvas>
+  <div class="portal-sphere" id="portal-sphere" aria-hidden="true"></div>
+  <button class="portal-enter" id="portal-enter" type="button">enter</button>
+</div>
 
 <!-- paper grain over everything -->
 <svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
@@ -21,7 +30,7 @@
 <header class="chrome">
   <a class="mark" href="#surface">jonah bernstein-schalet</a>
   <nav>
-    <a href="#surface">00</a><a href="#record">01</a><a href="#oregon">02</a><a href="#acid">03</a><a href="#india">04</a><a href="#tracer">05</a><a href="#fires">06</a>
+    <a href="#surface">00</a><a href="#record">01</a><a href="#oregon">02</a><a href="#india">03</a><a href="#tracer">04</a><a href="#fires">05</a><a href="#acid">06</a>
   </nav>
 </header>
 
@@ -35,12 +44,15 @@
 <main>
 
 <!-- 00 · the world's rivers, falling into New York -->
-<section id="surface" class="scrolly dark" data-scale="10⁷ m" style="--len:560vh">
+<section id="surface" class="scrolly dark" data-scale="10⁷ m" style="--len:640vh">
   <div class="sticky">
     <canvas id="rivers-ny" class="river-canvas"></canvas>
     <div class="hero">
       <h1>Jonah<br><em>Bernstein-</em><br>Schalet</h1>
-      <p class="lede">I think about how we can maximize human action for planetary good. I also think about the meaning of these terms: truth, reason, science, practical knowledge.</p>
+    </div>
+    <div class="hero-bio" id="hero-bio">
+      <p>My current work is focused on carbon dioxide removal, where I am primarily interested in answering questions related to the epistemic certainty of interpretations we can gather from empirical data. On a broader sense, I think about what should "count" as CDR and how we can extract more societal value from deployments of CDR technologies. Ultimately, I think the main question facing the CDR industry is whether we can identify scalable solutions at the lowest possible cost to society, ideally, solutions that have economic drivers that fully subsidize themselves and are not reliant on a global carbon market. I'm exploring these questions and more at Yale University.</p>
+      <p>In the past, I worked for Mati Carbon, an enhanced rock weathering practitioner in the global south, and winner of the $50M XPRIZE. Before that, I graduated from Brown with my Bachelor's degree in Geology-Biology, where I studied the influence of wildfires on biogeochemical cycles in Oregon, USA.</p>
     </div>
     <p class="descend">↓</p>
   </div>
@@ -48,12 +60,14 @@
 
 <!-- 01 · things I've done -->
 <section id="record" class="record" data-scale="1 person">
+  <div class="record-grid">
   <div class="record-head">
     <h2>Strata</h2>
     <p class="question">Things I've done</p>
   </div>
   <ol class="column" id="column"></ol>
-  <p class="record-foot">Things I think about</p>
+  </div>
+  <p class="record-foot">Notes</p>
 </section>
 
 <!-- 02 · across the continent into the Little Deschutes -->
@@ -65,16 +79,7 @@
   <div class="strata-stage"></div>
 </figure>
 
-<!-- 03 · sulfuric acid -->
-<section id="acid" class="scrolly ink" data-scale="∅ — parameter space" style="--len:520vh">
-  <div class="sticky">
-    <canvas id="joint"></canvas>
-    <p class="q">How do we account for sulfuric acid in carbon cycle frameworks?</p>
-    <div class="acid-readout" id="acid-readout"></div>
-  </div>
-</section>
-
-<!-- 04 · central India, then the weathering profile -->
+<!-- 03 · central India, then the weathering profile -->
 <section id="india" class="scrolly umber" data-scale="10⁴ m" style="--len:380vh">
   <div class="sticky"><canvas id="rivers-in" class="river-canvas"></canvas></div>
 </section>
@@ -85,11 +90,11 @@
       <img id="profile-img" src="img/weathering-profile.jpg" alt="A road cut through weathered basalt: red soil on top, broken dark rock below.">
       <canvas id="profile-lines"></canvas>
     </div>
-    <p class="q">Can rock dissolve fast enough to sustain a viable carbon removal strategy?</p>
+    <p class="q">rocks, dissolving</p>
   </div>
 </section>
 
-<!-- 05 · small tracer signals -->
+<!-- 04 · small tracer signals -->
 <section id="tracer" class="scrolly paper" data-scale="1 bit" style="--len:440vh">
   <div class="sticky center right">
     <svg id="tracer-plot" class="tracer" viewBox="0 0 1000 560"></svg>
@@ -101,13 +106,22 @@
   <div class="strata-stage"></div>
 </figure>
 
-<!-- 06 · rice: seven years of burning, month by month -->
+<!-- 05 · rice: seven years of burning, month by month -->
 <section id="fires" class="scrolly night" data-scale="10⁶ m" style="--len:520vh">
   <div class="sticky">
     <canvas id="fire-map"></canvas>
-    <p class="q">Rice is the most interesting plant on earth. How can we get the most of it?</p>
+    <p class="q">rice, burning</p>
     <p class="fire-month" id="fire-month">2019·01</p>
     <p class="fire-unit">MODIS fire pixel-days since Jan 2019</p>
+  </div>
+</section>
+
+<!-- 06 · sulfur -->
+<section id="acid" class="scrolly ink" data-scale="∅ — parameter space" style="--len:520vh">
+  <div class="sticky">
+    <canvas id="joint"></canvas>
+    <p class="q">Sulfur</p>
+    <div class="acid-readout" id="acid-readout"></div>
   </div>
 </section>
 
@@ -123,13 +137,14 @@
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="js/scroll.js?v=13"></script>
-<script src="js/rivers.js?v=13"></script>
-<script src="js/acid.js?v=13"></script>
-<script src="js/profile.js?v=13"></script>
-<script src="js/tracer.js?v=13"></script>
+<script src="js/scroll.js?v=25"></script>
+<script src="js/portal.js?v=25"></script>
+<script src="js/rivers.js?v=25"></script>
+<script src="js/acid.js?v=25"></script>
+<script src="js/profile.js?v=25"></script>
+<script src="js/tracer.js?v=25"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-<script src="js/fires.js?v=13"></script>
-<script src="js/record.js?v=13"></script>
+<script src="js/fires.js?v=25"></script>
+<script src="js/record.js?v=25"></script>
 </body>
 </html>

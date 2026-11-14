@@ -1,6 +1,6 @@
 // 06 · seven years of burning across South and Southeast Asia, built up month
 // by month with the scroll. NASA FIRMS MODIS fire pixel-days (measured), from
-// the rice_husk_ash fire-maps project, re-binned to 0.25° (data/firms-ssea.*).
+// the rice_husk_ash fire-maps project, re-binned to 0.25° (data/firms-ssea.js).
 (function () {
   const section = document.getElementById("fires");
   const canvas = document.getElementById("fire-map");
@@ -97,13 +97,15 @@
   });
 
   Promise.all([
-    fetch("data/firms-ssea.json").then((r) => r.json()),
-    fetch("data/firms-ssea.bin").then((r) => r.arrayBuffer()),
+    Scroll.data("firms-ssea"),
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-50m.json").then((r) => r.json()).catch(() => null),
-  ]).then(([m, buf, topo]) => {
-    meta = m;
-    cells = new Uint16Array(buf, 0, m.rows);
-    counts = new Uint16Array(buf, m.rows * 2, m.rows);
+  ]).then(([d, topo]) => {
+    const m = (meta = d.meta);
+    const raw = atob(d.b64), bytes = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+    d.b64 = null;
+    cells = new Uint16Array(bytes.buffer, 0, m.rows);
+    counts = new Uint16Array(bytes.buffer, m.rows * 2, m.rows);
     cum = new Float32Array(m.nx * m.ny);
     grid = document.createElement("canvas");
     grid.width = m.nx; grid.height = m.ny;

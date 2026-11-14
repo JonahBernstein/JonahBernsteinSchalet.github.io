@@ -59,6 +59,7 @@
    * opts.fall                  [p0, p1] scroll span of the fall
    * opts.fadeIn / opts.fadeOut rgb arrays to fade from / into at the ends
    * opts.hero                  element to fade out as the fall begins
+   * opts.bio                   element that lingers after the hero, then fades
    */
   function riverZoom(opts) {
     const { section, canvas } = opts;
@@ -108,6 +109,11 @@
       if (opts.hero) {
         opts.hero.style.opacity = 1 - clamp(p / 0.08);
         opts.hero.style.transform = `translateY(${-clamp(p / 0.08) * 40}px)`;
+      }
+      if (opts.bio) {
+        // wide: there from the start; narrow: arrives once the name has left. Gone before the fall.
+        const arrive = W < 860 ? clamp((p - 0.09) / 0.04) : 1;
+        opts.bio.style.opacity = arrive * (1 - clamp((p - 0.3) / 0.06));
       }
       const col = mix(GOLD, ORANGE, ease(clamp((p - f0) / (f1 - f0))));
 
@@ -211,7 +217,7 @@
 
     Promise.all([
       world,
-      opts.detail ? fetch(opts.detail).then((r) => (r.ok ? r.json() : null)).catch(() => null) : null,
+      opts.detail ? Scroll.data(opts.detail).catch(() => null) : null,
     ]).then(([f, d]) => {
       feats = f;
       detail = d;
@@ -227,22 +233,22 @@
 
   // 00 · the world, then New York
   riverZoom({
-    section: $("surface"), canvas: $("rivers-ny"), hero: document.querySelector(".hero"),
-    detail: "data/new-york.json",
+    section: $("surface"), canvas: $("rivers-ny"), hero: document.querySelector(".hero"), bio: $("hero-bio"),
+    detail: "new-york",
     box: [[-74.35, 40.55], [-73.55, 41.45]],
-    fall: [0.32, 0.9], fadeOut: INK,
+    fall: [0.4, 0.9], fadeOut: INK,
   });
   // 02 · out of the strata, across the continent, into the Little Deschutes
   riverZoom({
     section: $("oregon"), canvas: $("rivers-or"),
-    detail: "data/little-deschutes.json",
+    detail: "little-deschutes",
     box: [[-122.15, 43.26], [-121.4, 43.86]],
     from: { center: [-98, 40], s: 3.2 }, fall: [0.06, 0.9], fadeIn: INK, fadeOut: PAPER,
   });
   // 04 · halfway round the planet to central India, where the profile was photographed
   riverZoom({
     section: $("india"), canvas: $("rivers-in"),
-    detail: "data/india.json",
+    detail: "india",
     box: [[77.4, 20.5], [81.8, 23.7]],
     fall: [0.06, 0.9], fadeIn: UMBER, fadeOut: UMBER,
   });

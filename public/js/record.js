@@ -14,7 +14,7 @@
     { y: 2024, kind: "abstract", t: "Wildfire impacts on soil chemistry and the role of pyrogenic carbon in soil mineral transformation", v: "GSA Abstracts with Programs", a: "Bernstein-Schalet, Muñoz, Ramos, et al.", doi: "10.1130/abs/2024ne-397725" },
     { y: 2024, kind: "abstract", t: "Insights into the hydrological balance of Bear Lake (Utah–Idaho) through stable water isotope analysis", v: "GSA Abstracts with Programs", a: "Custado, Gagnon, Belanger, Sekhon, Bernstein-Schalet, et al.", doi: "10.1130/abs/2024am-403368" },
   ];
-  const LAYER = { 2026: "var(--label)", 2025: "var(--moss)", 2024: "var(--rust)" };
+  const LAYER = { 2026: "#a9bcc6", 2025: "#6f93a3", 2024: "#3f6473" }; // haze blue, deepening with age
   const col = document.getElementById("column");
   let year = null;
   for (const w of WORKS) {

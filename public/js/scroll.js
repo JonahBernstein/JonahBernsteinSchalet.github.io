@@ -24,7 +24,22 @@
     return Math.sqrt(-2 * Math.log(r() + 1e-9)) * Math.cos(2 * Math.PI * r());
   }
 
-  window.Scroll = { progress, near, clamp, rng, gauss, on: (fn) => ticks.push(fn) };
+  // Data ships as small scripts (data/*.js, packed by outputs/data-src/pack.py) and is
+  // loaded with <script> tags, not fetch(): browsers refuse fetch() of local files, so
+  // this is what lets the page work when index.html is opened straight from disk.
+  const ver = ((document.currentScript && document.currentScript.src.match(/\?v=\d+/)) || [""])[0];
+  const loading = {};
+  function data(name) {
+    return (loading[name] = loading[name] || new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = `data/${name}.js${ver}`;
+      s.onload = () => resolve(window.__data[name]);
+      s.onerror = () => reject(new Error(`data/${name}.js did not load`));
+      document.head.appendChild(s);
+    }));
+  }
+
+  window.Scroll = { progress, near, clamp, rng, gauss, data, on: (fn) => ticks.push(fn) };
   window.reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   requestAnimationFrame(function loop(t) {
@@ -37,16 +52,18 @@
   const scaleLabel = document.getElementById("core-scale");
   const scaled = [...document.querySelectorAll("[data-scale]")];
   const navLinks = [...document.querySelectorAll(".chrome nav a")];
-  let lastScale = "";
+  let lastSection = null;
   Scroll.on(() => {
     const max = document.documentElement.scrollHeight - innerHeight;
     tick.style.top = (clamp(scrollY / max) * 100) + "%";
     let current = scaled[0];
     for (const s of scaled) if (s.getBoundingClientRect().top < innerHeight * 0.5) current = s;
-    if (current.dataset.scale !== lastScale) {
-      lastScale = current.dataset.scale;
-      scaleLabel.textContent = lastScale;
-      navLinks.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + current.id));
+    if (current !== lastSection) { // by section, not by label: neighbours can share a scale
+      lastSection = current;
+      scaleLabel.textContent = current.dataset.scale;
+      // sections without a nav entry of their own (the rock profile) keep the previous one lit
+      if (navLinks.some((a) => a.getAttribute("href") === "#" + current.id))
+        navLinks.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + current.id));
     }
   });
 
