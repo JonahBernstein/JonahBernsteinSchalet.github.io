@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;1,400&family=Major+Mono+Display&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=7">
+<link rel="stylesheet" href="css/site.css?v=8">
 </head>
 <body>
 
@@ -22,7 +22,7 @@
     <li><a href="#photographs">Photographs</a></li>
     <li class="gap"><a href="#noise">Noise</a></li>
     <li><a href="#rice">Rice, burning</a></li>
-    <li><a href="#rocks">Rocks, dissolving</a></li>
+    <li><a href="#rocks">Profile</a></li>
     <li><a href="#sulfur-work">Sulfur</a></li>
   </ol>
   <ul class="contact">
@@ -94,8 +94,9 @@
     <div class="plate plot"><svg id="noise-plot" viewBox="0 0 1000 560" role="img" aria-label="Scatter plot: apparent dissolution against tracer signal, fanning out as the signal approaches zero."></svg></div>
   </figure>
   <div class="cap">
-    <p class="t"><i>Noise</i>, 2026</p>
-    <p class="m">Sometimes, noise can deceive us. 1,100 simulated field plots in which nothing dissolved. Assumed: baseline-to-feedstock concentration ratio 0.6, between-round shift sd 1%, lab noise sd 0.03, credit threshold 0.1. <a href="https://matisandbox.com" target="_blank" rel="noopener">matisandbox.com</a></p>
+    <p class="t">2026</p>
+    <p class="m">In <a href="https://matisandbox.com" target="_blank" rel="noopener">matisandbox.com</a>, we showed how small tracer signals can lead to high false positive dissolution estimates. This is why it's important to judge the raw data itself - for the tracer - according to tried and true tests for statistical significance. I view this as a major step in the right direction for high quality solid-phase MRV.</p>
+    <p class="note">Simulated: 1,100 field plots in which nothing dissolved. Assumed: baseline-to-feedstock concentration ratio 0.6, between-round shift sd 1%, lab noise sd 0.03, credit threshold 0.1.</p>
   </div>
 </article>
 
@@ -105,18 +106,20 @@
   </figure>
   <div class="cap">
     <p class="t"><i>Rice, burning</i>, 2026</p>
-    <p class="m">Fires seen from orbit over South and Southeast Asia, added up month by month from January 2019 to December 2025. Measured: MODIS active-fire detections (NASA FIRMS), fire pixel-days per 0.25° cell. Move across the plate to choose the month.</p>
+    <p class="m">Stubble burning is a major problem that leads to significant air pollution in these areas. The fire peaks tend to track peak harvest (which vary by region, but early spring comes out on top).</p>
+    <p class="note">Measured: MODIS active-fire detections (NASA FIRMS), fire pixel-days per 0.25° cell, added up month by month from January 2019 to December 2025. Move across the plate to choose the month.</p>
   </div>
 </article>
 
 <article class="work rocks" id="rocks">
   <div class="row two">
-    <figure><div class="over"><img src="img/weathering-profile.jpg" alt="A road cut through weathered basalt: red soil on top, broken dark rock below." loading="lazy"><canvas id="rocks-over" aria-hidden="true"></canvas></div></figure>
-    <figure><div class="plate"><canvas id="rocks-lines" aria-label="The same road cut as a line drawing of its horizons and joints."></canvas></div></figure>
+    <figure><div class="over"><img src="img/weathering-profile.jpg" alt="A quarry cut through weathered basalt: red soil on top, broken dark rock below." loading="lazy"><canvas id="rocks-over" aria-hidden="true"></canvas></div></figure>
+    <figure><div class="plate"><canvas id="rocks-lines" aria-label="The same quarry cut as a line drawing of its horizons and joints."></canvas></div></figure>
   </div>
   <div class="cap">
-    <p class="t"><i>Rocks, dissolving</i>, 2026</p>
-    <p class="m">A weathering profile in basalt near Seoni, Madhya Pradesh, with its horizons and joints traced from the photograph. Rest the pointer on either.</p>
+    <p class="t"><i>Profile</i>, 2026</p>
+    <p class="m">This is a quarry cut that gives us a window into the laterization process. It's interesting to see the shift from deep red (high Fe Al oxide content) to light brown, which are probably clays, to the unweathered rock. How long did this take? In ERW, we think on human timescales, but this is probably way off that. At least a few tens of thousands of years to make this profile.</p>
+    <p class="note">Near Seoni, Madhya Pradesh. Horizons and joints traced from the photograph. Rest the pointer on either.</p>
   </div>
 </article>
 
@@ -126,7 +129,8 @@
   </figure>
   <div class="cap">
     <p class="t"><i>Sulfur</i>, 2026</p>
-    <p class="m">A toy model with synthetic points, not data: net CO₂ drawdown against the share of weathering done by sulfuric acid and the share of carbonate in what weathers. Drag to turn.</p>
+    <p class="m">Net CO₂ drawdown against the share of weathering done by sulfuric acid and the share of carbonate in what weathers.</p>
+    <p class="note">A toy model with synthetic points, not data. Drag to turn.</p>
   </div>
 </article>
 
@@ -141,11 +145,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-<script src="js/base.js?v=7"></script>
-<script src="js/rivers.js?v=7"></script>
-<script src="js/rocks.js?v=7"></script>
-<script src="js/noise.js?v=7"></script>
-<script src="js/fires.js?v=7"></script>
-<script src="js/sulfur.js?v=7"></script>
+<script src="js/base.js?v=8"></script>
+<script src="js/rivers.js?v=8"></script>
+<script src="js/rocks.js?v=8"></script>
+<script src="js/noise.js?v=8"></script>
+<script src="js/fires.js?v=8"></script>
+<script src="js/sulfur.js?v=8"></script>
 </body>
 </html>

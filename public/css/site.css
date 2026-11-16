@@ -73,7 +73,9 @@ main { grid-column: 2; padding: 30px var(--gut) 0 clamp(20px, 3vw, 56px); }
 /* captions: title, year; then what it is made of */
 figcaption, .cap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4px clamp(16px, 3vw, 44px); margin-top: 14px; }
 .cap .t, figcaption .t { font-size: 17px; line-height: 1.4; }
-.cap .m, figcaption .m { font: 400 12.5px/1.6 var(--mono); color: var(--mute); max-width: 56em; }
+/* the caption proper is prose, in full ink; where the figure comes from is fine print beneath it */
+.cap .m, figcaption .m { font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 38em; }
+.cap .note { grid-column: 2; margin-top: 6px; font: 400 12px/1.6 var(--mono); color: var(--mute); max-width: 56em; }
 .sub { margin-top: 8px; font: 400 12px/1.5 var(--mono); color: var(--mute); }
 .sub b { font-weight: 400; color: var(--ink); }
 
@@ -107,6 +109,7 @@ footer { grid-column: 2; padding: 0 var(--gut) 34px clamp(20px, 3vw, 56px); font
   .row.two, .row.three { grid-template-columns: 1fr; }
   .photos { columns: 2; }
   figcaption, .cap { grid-template-columns: 1fr; }
+  .cap .note { grid-column: auto; }
   #fires { aspect-ratio: 4 / 3.4; }
   #sulfur { aspect-ratio: 1 / 1; }
   .pubs > li { grid-template-columns: 1fr; }
