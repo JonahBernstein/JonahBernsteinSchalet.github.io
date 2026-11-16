@@ -1,255 +1,111 @@
-// River maps that fall from planetary scale into one place. Each map section
-// shares the Natural Earth world rivers and adds its own detailed flowlines.
+// The backing. The world's river centerlines (Natural Earth), fixed behind the
+// page with a slow pulse moving along them. The page covers all but its edges;
+// past the last work the page ends and the map draws back to show the whole world.
 (function () {
-  const { clamp, progress, near, rng } = Scroll;
-
+  const { plate, clamp, rng, reduceMotion } = Base;
+  const outro = document.querySelector(".outro");
+  const NEAR = 1.9; // how far in the map sits while the page lies over it
+  const INK = "25,24,21", BLUE = "63,100,115";
   const SOURCES = [
     "https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_50m_rivers_lake_centerlines.geojson",
     "https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_rivers_lake_centerlines.geojson",
   ];
+  // by Natural Earth scalerank: trunk rivers, then the rest
   const GROUPS = [
-    { max: 3, w: 1.5, dash: [22, 120], speed: 0.06 },
-    { max: 6, w: 0.9, dash: [12, 80], speed: 0.045 },
-    { max: 99, w: 0.55, dash: [7, 55], speed: 0.035 },
+    { max: 3, w: 0.95, a: 0.62, len: 15, gap: 210, speed: 0.02 },
+    { max: 6, w: 0.6, a: 0.46, len: 10, gap: 170, speed: 0.016 },
+    { max: 99, w: 0.4, a: 0.34, len: 7, gap: 130, speed: 0.012 },
   ];
-  const GOLD = hexRgb("#e8d9a6"), ORANGE = hexRgb("#e7a14a");
-
-  function hexRgb(h) {
-    const n = parseInt(h.slice(1), 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-  }
-  const mix = (a, b, f) => a.map((v, i) => Math.round(v + (b[i] - v) * f));
-  const ease = (x) => x * x * (3 - 2 * x);
 
   async function loadWorld() {
     for (const url of SOURCES) {
       try {
         const res = await fetch(url);
         if (!res.ok) continue;
-        const geo = await res.json();
-        return geo.features.filter((f) => f.geometry);
+        return (await res.json()).features.filter((f) => f.geometry);
       } catch (e) { /* try the next one */ }
     }
-    return fakeRivers();
+    return null;
   }
 
-  // offline fallback: dendritic rivers grown from random mouths
-  function fakeRivers() {
-    const r = rng(11), out = [];
-    function grow(lon, lat, ang, len, rank, depth) {
-      const coords = [[lon, lat]];
-      for (let i = 0; i < len; i++) {
-        ang += (r() - 0.5) * 0.7;
-        lon += Math.cos(ang) * 0.9; lat += Math.sin(ang) * 0.6;
-        coords.push([lon, lat]);
-        if (depth < 4 && r() < 0.12) grow(lon, lat, ang + (r() < 0.5 ? 1 : -1) * (0.6 + r()), len * 0.55, rank + 2, depth + 1);
-      }
-      out.push({ properties: { scalerank: rank }, geometry: { type: "LineString", coordinates: coords } });
-    }
-    for (let i = 0; i < 70; i++) grow(-170 + r() * 340, -45 + r() * 110, r() * 6.28, 18 + r() * 30, 1 + Math.floor(r() * 3), 0);
-    return out;
-  }
-  const world = loadWorld();
-
-  /*
-   * opts.section, opts.canvas  where to draw
-   * opts.detail                url of {main, trib, pin?} flowlines
-   * opts.box                   [[lon, lat], [lon, lat]] the fall settles on
-   * opts.from                  { center: [lon, lat], s } where the camera starts (default: whole world)
-   * opts.fall                  [p0, p1] scroll span of the fall
-   * opts.fadeIn / opts.fadeOut rgb arrays to fade from / into at the ends
-   * opts.hero                  element to fade out as the fall begins
-   * opts.bio                   element that lingers after the hero, then fades
-   */
-  function riverZoom(opts) {
-    const { section, canvas } = opts;
+  const canvas = document.getElementById("rivers-world");
+  if (!canvas) return;
+  loadWorld().then((feats) => {
+    if (!feats) { canvas.parentNode.remove(); return; } // no map rather than a made-up one
     const ctx = canvas.getContext("2d");
-    const [f0, f1] = opts.fall || [0.05, 0.9];
-    let W = 0, H = 0, dpr = 1, feats = null, detail = null;
-    let paths = null, mainPath = null, tribPath = null, pin = null;
-    let start = [0, 0], focus = [0, 0], s0 = 1, sMax = 1;
-    let flow = 0, lastT = 0;
-
-    function build() {
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      W = canvas.clientWidth; H = canvas.clientHeight;
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      if (!feats) return;
-      const narrow = W < 700;
-      const projection = d3.geoEqualEarth().fitExtent(
-        narrow ? [[-W * 0.9, H * 0.18], [W * 1.9, H * 0.82]] : [[-W * 0.04, H * 0.03], [W * 1.04, H * 0.97]],
-        { type: "FeatureCollection", features: feats }
-      );
-      paths = GROUPS.map(() => new Path2D());
-      const gen = GROUPS.map((g, i) => d3.geoPath(projection, paths[i]));
-      for (const f of feats) {
-        const rank = f.properties.scalerank ?? f.properties.rank ?? 5;
-        gen[GROUPS.findIndex((g) => rank <= g.max)](f);
-      }
-
-      const [b0, b1] = opts.box;
-      const a = projection(b0), b = projection(b1);
-      focus = projection([(b0[0] + b1[0]) / 2, (b0[1] + b1[1]) / 2]);
-      sMax = Math.min((W * 0.8) / Math.abs(b[0] - a[0]), (H * 0.82) / Math.abs(b[1] - a[1]));
-      s0 = opts.from ? opts.from.s : 1;
-      start = opts.from ? projection(opts.from.center) : [W / 2, H / 2];
-
-      if (detail) {
-        mainPath = new Path2D(); tribPath = new Path2D();
-        d3.geoPath(projection, mainPath)(detail.main);
-        d3.geoPath(projection, tribPath)(detail.trib);
-        pin = detail.pin ? projection(detail.pin) : null;
-      }
-    }
-
-    function draw(t) {
-      if (!paths || !near(section, 0.1)) return;
-      const p = progress(section);
-
-      if (opts.hero) {
-        opts.hero.style.opacity = 1 - clamp(p / 0.08);
-        opts.hero.style.transform = `translateY(${-clamp(p / 0.08) * 40}px)`;
-      }
-      if (opts.bio) {
-        // wide: there from the start; narrow: arrives once the name has left. Gone before the fall.
-        const arrive = W < 860 ? clamp((p - 0.09) / 0.04) : 1;
-        opts.bio.style.opacity = arrive * (1 - clamp((p - 0.3) / 0.06));
-      }
-      const col = mix(GOLD, ORANGE, ease(clamp((p - f0) / (f1 - f0))));
-
-      // logarithmic fall: the camera centres first, then keeps dropping
-      const z = ease(clamp((p - f0) / (f1 - f0)));
-      const s = Math.exp(Math.log(s0) + z * (Math.log(sMax) - Math.log(s0)));
-      const cz = ease(clamp(z / 0.35));
-      const cx = start[0] + (focus[0] - start[0]) * cz;
-      const cy = start[1] + (focus[1] - start[1]) * cz;
-      const worldA = 1 - clamp((z - 0.55) / 0.25); // the coarse world map gives way
-      const localA = clamp((z - 0.5) / 0.3); // to the detailed flowlines
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, W, H);
-      ctx.save();
-      ctx.translate(W * 0.5, H * 0.5);
-      ctx.scale(s, s);
-      ctx.translate(-cx, -cy);
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      const lw = (w) => (w * (1 + 0.35 * Math.log(s))) / s;
-
-      // Dashes live in map space so zooming doesn't slide them along the rivers;
-      // the flow is integrated per frame so its on-screen speed stays steady.
-      const dt = Math.min(50, t - lastT || 16);
-      lastT = t;
-      flow = reduceMotion ? p * 4000 : flow + dt / s;
-
-      if (worldA > 0) {
-        ctx.globalCompositeOperation = "source-over";
-        ctx.setLineDash([]);
+    const all = { type: "FeatureCollection", features: feats };
+    let paths = null, lines = [], flow = 0, last = 0;
+    plate(canvas, {
+      size(p) {
+        // cover the box: fit the width, and if that leaves the map too short, fit the height and let the sides run off
+        const proj = d3.geoEqualEarth().fitExtent([[10, 22], [p.W - 10, p.H * 0.9]], all);
+        const [[, y0], [, y1]] = d3.geoPath(proj).bounds(all);
+        if (y1 - y0 < p.H * 0.6) {
+          proj.fitHeight(p.H * 0.8, all);
+          const [[x0], [x1]] = d3.geoPath(proj).bounds(all), tr = proj.translate();
+          proj.translate([tr[0] + (p.W - (x0 + x1)) / 2 - (x1 - x0) * 0.1, tr[1] + p.H * 0.06]); // lean toward Africa and Asia
+        }
+        paths = GROUPS.map(() => new Path2D());
+        const gen = GROUPS.map((g, i) => d3.geoPath(proj, paths[i]));
+        // each river also as a measured line, so a pulse can travel it on its own clock
+        const r = rng(31);
+        lines = [];
+        for (const f of feats) {
+          const gi = GROUPS.findIndex((g) => (f.properties.scalerank ?? 5) <= g.max);
+          gen[gi](f);
+          const parts = f.geometry.type === "LineString" ? [f.geometry.coordinates] : f.geometry.type === "MultiLineString" ? f.geometry.coordinates : [];
+          for (const part of parts) {
+            const pts = part.map((c) => proj(c)), cum = [0];
+            let broken = false;
+            for (let i = 1; i < pts.length; i++) {
+              const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+              if (d > p.W / 3) broken = true; // a line that wraps round the edge of the map
+              cum.push(cum[i - 1] + d);
+            }
+            const L = cum[cum.length - 1];
+            if (broken || L < 4) continue;
+            lines.push({ gi, pts, cum, L, period: L + GROUPS[gi].gap * (0.6 + r() * 0.8), phase: r() });
+          }
+        }
+      },
+      draw(t, p) {
+        const dt = Math.min(50, t - last || 16);
+        last = t;
+        if (!reduceMotion) flow += dt;
+        // Under the page the map sits close, so the river country of the Americas and of Asia
+        // falls on the two edges. As the page ends, it draws back until the whole world is in view.
+        const out = outro ? clamp(1 - outro.getBoundingClientRect().top / innerHeight) : 1;
+        const e = out * out * (3 - 2 * out);
+        const z = p.W < 700 ? 1 : Math.exp(Math.log(NEAR) * (1 - e));
+        ctx.setTransform(p.dpr, 0, 0, p.dpr, 0, 0);
+        ctx.clearRect(0, 0, p.W, p.H);
+        ctx.translate(p.W / 2, p.H / 2); ctx.scale(z, z); ctx.translate(-p.W / 2, -p.H / 2);
+        ctx.lineCap = "round"; ctx.lineJoin = "round";
         GROUPS.forEach((g, i) => {
-          ctx.strokeStyle = `rgba(233,228,214,${(0.12 + 0.06 * (2 - i)) * worldA})`;
-          ctx.lineWidth = lw(g.w);
+          ctx.strokeStyle = `rgba(${INK},${g.a})`; ctx.lineWidth = g.w / Math.sqrt(z);
           ctx.stroke(paths[i]);
         });
-        ctx.globalCompositeOperation = "lighter";
-        GROUPS.forEach((g, i) => {
-          ctx.setLineDash(g.dash);
-          ctx.lineDashOffset = -flow * g.speed;
-          ctx.strokeStyle = `rgba(${col},${0.16 * worldA})`;
-          ctx.lineWidth = lw(g.w * 4.5);
-          ctx.stroke(paths[i]);
-          ctx.strokeStyle = `rgba(${col},${0.85 * worldA})`;
-          ctx.lineWidth = lw(g.w * 1.3);
-          ctx.stroke(paths[i]);
+        // one pulse per river, each starting at its own moment
+        ctx.strokeStyle = `rgba(${BLUE},.95)`;
+        GROUPS.forEach((g, gi) => {
+          ctx.lineWidth = (g.w * 1.7) / Math.sqrt(z);
+          ctx.beginPath();
+          for (const ln of lines) {
+            if (ln.gi !== gi) continue;
+            const head = (flow * g.speed + ln.phase * ln.period) % ln.period, tail = head - g.len;
+            if (tail > ln.L || head < 0) continue;
+            const a = Math.max(0, tail), b = Math.min(ln.L, head), { pts, cum } = ln;
+            let i = 1;
+            while (cum[i] < a) i++;
+            let f = (a - cum[i - 1]) / (cum[i] - cum[i - 1] || 1);
+            ctx.moveTo(pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f);
+            while (cum[i] < b) { ctx.lineTo(pts[i][0], pts[i][1]); i++; }
+            f = (b - cum[i - 1]) / (cum[i] - cum[i - 1] || 1);
+            ctx.lineTo(pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f);
+          }
+          ctx.stroke();
         });
-      }
-
-      if (mainPath && localA > 0) {
-        // sized for the bottom of the fall, in screen pixels at sMax
-        const px = (v) => v / sMax;
-        ctx.globalCompositeOperation = "source-over";
-        ctx.setLineDash([]);
-        ctx.strokeStyle = `rgba(233,228,214,${0.22 * localA})`;
-        ctx.lineWidth = px(1);
-        ctx.stroke(tribPath);
-        ctx.strokeStyle = `rgba(233,228,214,${0.35 * localA})`;
-        ctx.lineWidth = px(2);
-        ctx.stroke(mainPath);
-        ctx.globalCompositeOperation = "lighter";
-        ctx.lineDashOffset = -flow * 0.045;
-        ctx.setLineDash([px(10), px(46)]);
-        ctx.strokeStyle = `rgba(${col},${0.8 * localA})`;
-        ctx.lineWidth = px(1.3);
-        ctx.stroke(tribPath);
-        ctx.setLineDash([px(18), px(70)]);
-        ctx.strokeStyle = `rgba(${ORANGE},${0.2 * localA})`;
-        ctx.lineWidth = px(9);
-        ctx.stroke(mainPath);
-        ctx.strokeStyle = `rgba(${ORANGE},${0.95 * localA})`;
-        ctx.lineWidth = px(2.6);
-        ctx.stroke(mainPath);
-      }
-      ctx.restore();
-
-      // the place itself: a pin that breathes
-      if (pin && localA > 0.3) {
-        const x = W * 0.5 + (pin[0] - cx) * s, y = H * 0.5 + (pin[1] - cy) * s;
-        const a = clamp((localA - 0.3) / 0.4);
-        ctx.globalCompositeOperation = "source-over";
-        ctx.setLineDash([]);
-        ctx.fillStyle = `rgba(255,248,230,${a})`;
-        ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fill();
-        ctx.strokeStyle = `rgba(231,161,74,${a})`;
-        ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.arc(x, y, 12 + Math.sin(t * 0.004) * 3, 0, 7); ctx.stroke();
-      }
-
-      // seams: come out of the section above, dissolve into the one below
-      ctx.globalCompositeOperation = "source-over";
-      if (opts.fadeIn) {
-        const a = 1 - ease(clamp(p / 0.06));
-        if (a > 0) { ctx.fillStyle = `rgba(${opts.fadeIn},${a})`; ctx.fillRect(0, 0, W, H); }
-      }
-      if (opts.fadeOut) {
-        const a = ease(clamp((p - 0.93) / 0.07));
-        if (a > 0) { ctx.fillStyle = `rgba(${opts.fadeOut},${a})`; ctx.fillRect(0, 0, W, H); }
-      }
-    }
-
-    Promise.all([
-      world,
-      opts.detail ? Scroll.data(opts.detail).catch(() => null) : null,
-    ]).then(([f, d]) => {
-      feats = f;
-      detail = d;
-      build();
+      },
     });
-    addEventListener("resize", () => { clearTimeout(build.t); build.t = setTimeout(build, 150); });
-    build();
-    Scroll.on(draw);
-  }
-
-  const INK = [25, 24, 21], PAPER = [238, 234, 225], UMBER = [21, 19, 15];
-  const $ = (id) => document.getElementById(id);
-
-  // 00 · the world, then New York
-  riverZoom({
-    section: $("surface"), canvas: $("rivers-ny"), hero: document.querySelector(".hero"), bio: $("hero-bio"),
-    detail: "new-york",
-    box: [[-74.35, 40.55], [-73.55, 41.45]],
-    fall: [0.4, 0.9], fadeOut: INK,
-  });
-  // 02 · out of the strata, across the continent, into the Little Deschutes
-  riverZoom({
-    section: $("oregon"), canvas: $("rivers-or"),
-    detail: "little-deschutes",
-    box: [[-122.15, 43.26], [-121.4, 43.86]],
-    from: { center: [-98, 40], s: 3.2 }, fall: [0.06, 0.9], fadeIn: INK, fadeOut: PAPER,
-  });
-  // 04 · halfway round the planet to central India, where the profile was photographed
-  riverZoom({
-    section: $("india"), canvas: $("rivers-in"),
-    detail: "india",
-    box: [[77.4, 20.5], [81.8, 23.7]],
-    fall: [0.06, 0.9], fadeIn: UMBER, fadeOut: UMBER,
   });
 })();

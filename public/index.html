@@ -4,147 +4,148 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jonah Bernstein-Schalet</title>
-<meta name="description" content="Jonah Bernstein-Schalet — figures, photographs, publications.">
+<meta name="description" content="Jonah Bernstein-Schalet — carbon dioxide removal: figures, photographs, publications.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Instrument+Serif:ital@0;1&family=Major+Mono+Display&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/site.css?v=25">
-<!-- the gate is skipped when arriving at a section link -->
-<script>if (!location.hash) document.documentElement.classList.add("gated");</script>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;1,400&family=Major+Mono+Display&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=7">
 </head>
 <body>
 
-<!-- the gate -->
-<div class="portal" id="portal">
-  <canvas id="portal-canvas" aria-hidden="true"></canvas>
-  <div class="portal-sphere" id="portal-sphere" aria-hidden="true"></div>
-  <button class="portal-enter" id="portal-enter" type="button">enter</button>
-</div>
+<div class="backing" aria-hidden="true"><canvas id="rivers-world"></canvas></div>
 
-<!-- paper grain over everything -->
-<svg class="grain" aria-hidden="true"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .55 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+<div class="sheet">
+<nav class="rail" aria-label="Index">
+  <a class="mark" href="#top">Jonah<br>Bernstein-<br>Schalet</a>
+  <ol>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#photographs">Photographs</a></li>
+    <li class="gap"><a href="#noise">Noise</a></li>
+    <li><a href="#rice">Rice, burning</a></li>
+    <li><a href="#rocks">Rocks, dissolving</a></li>
+    <li><a href="#sulfur-work">Sulfur</a></li>
+  </ol>
+  <ul class="contact">
+    <li><a href="mailto:jonah.bernstein-schalet@yale.edu">Email</a></li>
+    <li><a href="https://www.linkedin.com/in/jbsgeo" target="_blank" rel="noopener">LinkedIn</a></li>
+  </ul>
+</nav>
 
-<!-- a line taken for a walk, drawn by the scroll -->
-<svg class="walk" aria-hidden="true"><path id="walk-path"/></svg>
+<main id="top">
 
-<header class="chrome">
-  <a class="mark" href="#surface">jonah bernstein-schalet</a>
-  <nav>
-    <a href="#surface">00</a><a href="#record">01</a><a href="#oregon">02</a><a href="#india">03</a><a href="#tracer">04</a><a href="#fires">05</a><a href="#acid">06</a>
-  </nav>
-</header>
-
-<aside class="core" aria-hidden="true">
-  <div class="core-col">
-    <i style="--c:var(--river)"></i><i style="--c:var(--label)"></i><i style="--c:var(--teal)"></i><i style="--c:var(--sulfur)"></i><i style="--c:var(--rust)"></i><i style="--c:var(--haze)"></i><i style="--c:var(--moss)"></i>
-  </div>
-  <div class="core-tick"><span id="core-scale">10⁷ m</span></div>
-</aside>
-
-<main>
-
-<!-- 00 · the world's rivers, falling into New York -->
-<section id="surface" class="scrolly dark" data-scale="10⁷ m" style="--len:640vh">
-  <div class="sticky">
-    <canvas id="rivers-ny" class="river-canvas"></canvas>
-    <div class="hero">
-      <h1>Jonah<br><em>Bernstein-</em><br>Schalet</h1>
-    </div>
-    <div class="hero-bio" id="hero-bio">
-      <p>My current work is focused on carbon dioxide removal, where I am primarily interested in answering questions related to the epistemic certainty of interpretations we can gather from empirical data. On a broader sense, I think about what should "count" as CDR and how we can extract more societal value from deployments of CDR technologies. Ultimately, I think the main question facing the CDR industry is whether we can identify scalable solutions at the lowest possible cost to society, ideally, solutions that have economic drivers that fully subsidize themselves and are not reliant on a global carbon market. I'm exploring these questions and more at Yale University.</p>
-      <p>In the past, I worked for Mati Carbon, an enhanced rock weathering practitioner in the global south, and winner of the $50M XPRIZE. Before that, I graduated from Brown with my Bachelor's degree in Geology-Biology, where I studied the influence of wildfires on biogeochemical cycles in Oregon, USA.</p>
-    </div>
-    <p class="descend">↓</p>
-  </div>
+<section class="statement">
+  <p>My current work is focused on carbon dioxide removal. I am primarily interested in answering questions related to the epistemic certainty of interpretations we can gather from empirical data. On a broader sense, I think about what should "count" as CDR and how we can extract more societal value from deployments of CDR technologies. Ultimately, I think the main question facing the CDR industry is whether we can identify scalable solutions at the lowest possible cost to society, ideally, solutions that have economic drivers that fully subsidize themselves and are not reliant on a global carbon market. I'm exploring these questions and more at Yale University.</p>
+  <p>In the past, I worked for Mati Carbon, an enhanced rock weathering practitioner in the global south, and winner of the $50M XPRIZE. Before that, I graduated from Brown with my Bachelor's degree in Geology-Biology, where I studied the influence of wildfires on biogeochemical cycles in Oregon, USA.</p>
 </section>
 
-<!-- 01 · things I've done -->
-<section id="record" class="record" data-scale="1 person">
-  <div class="record-grid">
-  <div class="record-head">
-    <h2>Strata</h2>
-    <p class="question">Things I've done</p>
+<section class="work" id="publications">
+  <h2>Publications</h2>
+  <ol class="pubs">
+    <li>
+      <span class="y">2026</span>
+      <ul>
+        <li><a href="https://doi.org/10.70212/cdrxiv.2026483.v1" target="_blank" rel="noopener"><span class="t">Enhanced rock weathering for improved smallholder farmer welfare: An at-scale case study for rice agriculture in India</span></a><span class="m">Jordan, Mills, Bernstein-Schalet, et al. <i>CDRxiv</i>, preprint.</span></li>
+        <li><a href="https://doi.org/10.70212/cdrxiv.2026502.v1" target="_blank" rel="noopener"><span class="t">Increased yields for smallholder farmers from enhanced rock weathering</span></a><span class="m">Jordan, Mills, Jain, Patidar, Maji, Bernstein-Schalet, Agarwal, Planavsky. <i>CDRxiv</i>, preprint.</span></li>
+        <li><a href="https://doi.org/10.5281/zenodo.20468069" target="_blank" rel="noopener"><span class="t">Increased yields for smallholder farmers from enhanced rock weathering — data</span></a><span class="m">Jordan, Mills, Jain, Patidar, Maji, Bernstein-Schalet, Agarwal, Planavsky. <i>Zenodo</i>, dataset.</span></li>
+        <li><a href="https://doi.org/10.5281/zenodo.19242236" target="_blank" rel="noopener"><span class="t">GPM Kharif 2024 — Health and Safety Dataset</span></a><span class="m">Jordan, Bernstein-Schalet. <i>Zenodo</i>, dataset.</span></li>
+        <li><a href="https://doi.org/10.46427/gold2026.37703" target="_blank" rel="noopener"><span class="t">Balancing the Modern Uranium Budget in Bear Lake, Utah–Idaho</span></a><span class="m">Piccione, Ibarra, Kinsley, et al. <i>Goldschmidt</i>, abstract.</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="y">2025</span>
+      <ul>
+        <li><a href="https://doi.org/10.1029/2024wr038264" target="_blank" rel="noopener"><span class="t">Constraining the Modern Hydrological Balance of Bear Lake, Utah–Idaho: Insights From Stable Isotopes (δ¹⁸O and δ²H)</span></a><span class="m">Custado, Gagnon, Belanger, Sekhon, Bernstein-Schalet, et al. <i>Water Resources Research</i>, article.</span></li>
+        <li><a href="https://doi.org/10.7185/gold2025.27547" target="_blank" rel="noopener"><span class="t">Anionic resin as an MRV strategy for measuring DIC at ERW deployments</span></a><span class="m">Das, Rajendran, Bernstein-Schalet, Agarwal, Jordan. <i>Goldschmidt</i>, abstract.</span></li>
+        <li><a href="https://doi.org/10.7185/gold2025.28618" target="_blank" rel="noopener"><span class="t">Reactive-transport models and isotopic tracers reveal the spatial pattern of riverine CO₂ emissions and suggest cooperative inorganic–organic carbon cycling</span></a><span class="m">Torres, Larsen, Suquino, et al. <i>Goldschmidt</i>, abstract.</span></li>
+        <li><a href="https://doi.org/10.5194/egusphere-egu25-18512" target="_blank" rel="noopener"><span class="t">Enhanced rock weathering for improved farmer welfare in the Global South: An at-scale case study for rice agriculture in India</span></a><span class="m">Jordan, Das, Bernstein-Schalet, Agarwal, Planavsky, Beerling. <i>EGU General Assembly</i>, abstract.</span></li>
+      </ul>
+    </li>
+    <li>
+      <span class="y">2024</span>
+      <ul>
+        <li><a href="https://doi.org/10.1130/abs/2024ne-397725" target="_blank" rel="noopener"><span class="t">Wildfire impacts on soil chemistry and the role of pyrogenic carbon in soil mineral transformation</span></a><span class="m">Bernstein-Schalet, Muñoz, Ramos, et al. <i>GSA Abstracts with Programs</i>, abstract.</span></li>
+        <li><a href="https://doi.org/10.1130/abs/2024am-403368" target="_blank" rel="noopener"><span class="t">Insights into the hydrological balance of Bear Lake (Utah–Idaho) through stable water isotope analysis</span></a><span class="m">Custado, Gagnon, Belanger, Sekhon, Bernstein-Schalet, et al. <i>GSA Abstracts with Programs</i>, abstract.</span></li>
+      </ul>
+    </li>
+  </ol>
+</section>
+
+<article class="work" id="photographs">
+  <h2>Photographs (of or shot by myself)</h2>
+  <div class="photos">
+    <figure><img src="img/discharge-meter.jpg" alt="A person wading a forest river with a discharge meter." loading="lazy"><p class="sub">Little Deschutes River, Oregon</p></figure>
+    <figure><img src="img/saprolite.jpg" alt="Cracked, rust-coloured weathered rock with a pen for scale." loading="lazy"><p class="sub">Saprolite</p></figure>
+    <figure><img src="img/kamikochi.jpg" alt="A forested mountain valley under cloud." loading="lazy"><p class="sub">Kamikochi</p></figure>
+    <figure><img src="img/amarkantak.jpg" alt="A carved stone temple tower with four faces, against a low sun." loading="lazy"><p class="sub">Amarkantak</p></figure>
+    <figure><img src="img/crooked-river.jpg" alt="A river running through a basalt canyon." loading="lazy"><p class="sub">Crooked River, Oregon</p></figure>
+    <figure><img src="img/canopy-mbeya.jpg" alt="Tree crowns seen from below, their edges not touching." loading="lazy"><p class="sub">Mbeya</p></figure>
+    <figure><img src="img/seoni-rice.jpg" alt="Rice growing in a field." loading="lazy"><p class="sub">Seoni, Madhya Pradesh</p></figure>
+    <figure><img src="img/ethiopia.jpg" alt="A group of people smiling at the camera in a green highland landscape." loading="lazy"><p class="sub">Ethiopia</p></figure>
+    <figure><img src="img/salzburg.jpg" alt="A river through a city under grey cloud, a fortress on the hill." loading="lazy"><p class="sub">Salzburg</p></figure>
+    <figure><img src="img/rhinos.jpg" alt="Two rhinoceroses lying in the shade of dry trees." loading="lazy"><p class="sub">Livingstone</p></figure>
+    <figure><img src="img/iceland-snow.jpg" alt="A film photograph of dark hills under patchy snow and low cloud." loading="lazy"><p class="sub">Iceland</p></figure>
+    <figure><img src="img/zhangjiajie.jpg" alt="A film photograph of forested sandstone pillars receding into haze." loading="lazy"><p class="sub">Zhangjiajie</p></figure>
+    <figure><img src="img/iceland-film.jpg" alt="A film photograph of snow-patched hills, washed over with orange and blue light leaks." loading="lazy"><p class="sub">Iceland</p></figure>
   </div>
-  <ol class="column" id="column"></ol>
+</article>
+
+<article class="work" id="noise">
+  <figure>
+    <div class="plate plot"><svg id="noise-plot" viewBox="0 0 1000 560" role="img" aria-label="Scatter plot: apparent dissolution against tracer signal, fanning out as the signal approaches zero."></svg></div>
+  </figure>
+  <div class="cap">
+    <p class="t"><i>Noise</i>, 2026</p>
+    <p class="m">Sometimes, noise can deceive us. 1,100 simulated field plots in which nothing dissolved. Assumed: baseline-to-feedstock concentration ratio 0.6, between-round shift sd 1%, lab noise sd 0.03, credit threshold 0.1. <a href="https://matisandbox.com" target="_blank" rel="noopener">matisandbox.com</a></p>
   </div>
-  <p class="record-foot">Notes</p>
-</section>
+</article>
 
-<!-- 02 · across the continent into the Little Deschutes -->
-<section id="oregon" class="scrolly dark" data-scale="10⁴ m" style="--len:380vh">
-  <div class="sticky"><canvas id="rivers-or" class="river-canvas"></canvas></div>
-</section>
-
-<figure class="strata" data-img="img/discharge-meter.jpg" data-dir="x">
-  <div class="strata-stage"></div>
-</figure>
-
-<!-- 03 · central India, then the weathering profile -->
-<section id="india" class="scrolly umber" data-scale="10⁴ m" style="--len:380vh">
-  <div class="sticky"><canvas id="rivers-in" class="river-canvas"></canvas></div>
-</section>
-
-<section id="profile" class="scrolly umber" data-scale="10⁰ m" style="--len:520vh">
-  <div class="sticky">
-    <div class="profile-stage" id="profile-stage">
-      <img id="profile-img" src="img/weathering-profile.jpg" alt="A road cut through weathered basalt: red soil on top, broken dark rock below.">
-      <canvas id="profile-lines"></canvas>
-    </div>
-    <p class="q">rocks, dissolving</p>
+<article class="work" id="rice">
+  <figure>
+    <div class="plate"><canvas id="fires"></canvas><p class="on-plate tl month" id="fires-month">2019·01</p></div>
+  </figure>
+  <div class="cap">
+    <p class="t"><i>Rice, burning</i>, 2026</p>
+    <p class="m">Fires seen from orbit over South and Southeast Asia, added up month by month from January 2019 to December 2025. Measured: MODIS active-fire detections (NASA FIRMS), fire pixel-days per 0.25° cell. Move across the plate to choose the month.</p>
   </div>
-</section>
+</article>
 
-<!-- 04 · small tracer signals -->
-<section id="tracer" class="scrolly paper" data-scale="1 bit" style="--len:440vh">
-  <div class="sticky center right">
-    <svg id="tracer-plot" class="tracer" viewBox="0 0 1000 560"></svg>
-    <p class="q">Sometimes, noise can deceive us <a class="q-link" href="https://matisandbox.com" target="_blank" rel="noopener">matisandbox.com →</a></p>
+<article class="work rocks" id="rocks">
+  <div class="row two">
+    <figure><div class="over"><img src="img/weathering-profile.jpg" alt="A road cut through weathered basalt: red soil on top, broken dark rock below." loading="lazy"><canvas id="rocks-over" aria-hidden="true"></canvas></div></figure>
+    <figure><div class="plate"><canvas id="rocks-lines" aria-label="The same road cut as a line drawing of its horizons and joints."></canvas></div></figure>
   </div>
-</section>
-
-<figure class="strata" data-img="img/seoni-rice.jpg" data-dir="y">
-  <div class="strata-stage"></div>
-</figure>
-
-<!-- 05 · rice: seven years of burning, month by month -->
-<section id="fires" class="scrolly night" data-scale="10⁶ m" style="--len:520vh">
-  <div class="sticky">
-    <canvas id="fire-map"></canvas>
-    <p class="q">rice, burning</p>
-    <p class="fire-month" id="fire-month">2019·01</p>
-    <p class="fire-unit">MODIS fire pixel-days since Jan 2019</p>
+  <div class="cap">
+    <p class="t"><i>Rocks, dissolving</i>, 2026</p>
+    <p class="m">A weathering profile in basalt near Seoni, Madhya Pradesh, with its horizons and joints traced from the photograph. Rest the pointer on either.</p>
   </div>
-</section>
+</article>
 
-<!-- 06 · sulfur -->
-<section id="acid" class="scrolly ink" data-scale="∅ — parameter space" style="--len:520vh">
-  <div class="sticky">
-    <canvas id="joint"></canvas>
-    <p class="q">Sulfur</p>
-    <div class="acid-readout" id="acid-readout"></div>
+<article class="work" id="sulfur-work">
+  <figure>
+    <div class="plate"><canvas id="sulfur"></canvas><pre class="on-plate tr" id="sulfur-readout"></pre></div>
+  </figure>
+  <div class="cap">
+    <p class="t"><i>Sulfur</i>, 2026</p>
+    <p class="m">A toy model with synthetic points, not data: net CO₂ drawdown against the share of weathering done by sulfuric acid and the share of carbonate in what weathers. Drag to turn.</p>
   </div>
-</section>
-
-<figure class="strata" data-img="img/frame-0016-snow.jpg" data-dir="x">
-  <div class="strata-stage"></div>
-</figure>
-
-<figure class="coda">
-  <img src="img/label.jpg" alt="A typewritten orange label on white paper reading: my life has a life of its own. Below it, marbled blue-green paper.">
-  <figcaption><a href="#" class="write">write to me →</a></figcaption>
-</figure>
+</article>
 
 </main>
 
+<footer>Jonah Bernstein-Schalet, 2026 · <a href="mailto:jonah.bernstein-schalet@yale.edu">jonah.bernstein-schalet@yale.edu</a> · <a href="https://www.linkedin.com/in/jbsgeo" target="_blank" rel="noopener">linkedin.com/in/jbsgeo</a></footer>
+</div>
+
+<section class="outro" aria-label="Rivers of the world">
+  <p class="sub">Rivers of the world. Centerlines from Natural Earth.</p>
+</section>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
-<script src="js/scroll.js?v=25"></script>
-<script src="js/portal.js?v=25"></script>
-<script src="js/rivers.js?v=25"></script>
-<script src="js/acid.js?v=25"></script>
-<script src="js/profile.js?v=25"></script>
-<script src="js/tracer.js?v=25"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
-<script src="js/fires.js?v=25"></script>
-<script src="js/record.js?v=25"></script>
+<script src="js/base.js?v=7"></script>
+<script src="js/rivers.js?v=7"></script>
+<script src="js/rocks.js?v=7"></script>
+<script src="js/noise.js?v=7"></script>
+<script src="js/fires.js?v=7"></script>
+<script src="js/sulfur.js?v=7"></script>
 </body>
 </html>
