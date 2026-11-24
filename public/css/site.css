@@ -42,6 +42,15 @@ footer a:hover { text-decoration: underline; }
 main { grid-column: 2; padding: 30px var(--gut) 0 clamp(20px, 3vw, 56px); }
 
 .statement { max-width: 38em; font-size: clamp(18px, 1.42vw, 21px); line-height: 1.5; padding-bottom: clamp(56px, 9vh, 96px); }
+/* the bio: a portrait beside each paragraph, then an epigraph under the text */
+.statement.pair-c { max-width: none; display: grid; grid-template-columns: minmax(0, 38em) minmax(160px, 220px); gap: 1em clamp(24px, 4vw, 64px); align-items: start; }
+.statement.pair-c > p + p { margin-top: 0; }
+.statement.pair-c figure { margin: 6px 0 0; }
+.statement.pair-c img { aspect-ratio: 4 / 5; object-fit: cover; }
+.statement.pair-c figure:nth-of-type(2) { grid-row: span 2; } /* lets the epigraph sit right under the text, beside the photo */
+.epigraph { grid-column: 1; margin: 1.4em 0 0; padding-left: 1.2em; border-left: 1px solid var(--rule); }
+.epigraph p { font-style: italic; }
+.epigraph .by { font-style: normal; margin-top: .4em; font: 400 12.5px/1.6 var(--mono); color: var(--mute); }
 .statement p + p { margin-top: 1em; }
 
 /* ——— works ——— */
@@ -113,5 +122,9 @@ footer { grid-column: 2; padding: 0 var(--gut) 34px clamp(20px, 3vw, 56px); font
   #fires { aspect-ratio: 4 / 3.4; }
   #sulfur { aspect-ratio: 1 / 1; }
   .pubs > li { grid-template-columns: 1fr; }
+  .statement.pair-c { grid-template-columns: 1fr; }
+  .statement.pair-c figure { width: min(200px, 55%); }
+  .statement.pair-c figure:nth-of-type(2) { grid-row: auto; }
+  .statement .portrait { order: -1; width: min(220px, 60%); margin: 0 0 6px; }
 }
 @media (max-width: 520px) { .photos { columns: 1; } }
