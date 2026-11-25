@@ -72,7 +72,7 @@
       ctx.fillRect(bars.x + i * bw + 0.5, bars.y + bars.h - h, Math.max(1, bw - 1.5), h);
     }
     ctx.fillStyle = `rgba(${INK},.6)`;
-    ctx.font = "11px 'Courier Prime', monospace";
+    ctx.font = "11px 'Helvetica Neue', Helvetica, Arial, sans-serif";
     for (let y = 0; y < 7; y++) ctx.fillText(2019 + y, bars.x + y * 12 * bw, bars.y + bars.h + 15);
     label.textContent = `${2019 + Math.floor(m / 12)}·${String((m % 12) + 1).padStart(2, "0")}`;
   }

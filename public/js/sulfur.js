@@ -84,7 +84,7 @@
 
       // axes and their names
       ctx.strokeStyle = `rgba(${INK},.85)`; ctx.fillStyle = `rgba(${INK},.85)`; ctx.lineWidth = 0.8;
-      ctx.font = `${p.W < 520 ? 10 : 11.5}px 'Courier Prime', monospace`;
+      ctx.font = `${p.W < 520 ? 10 : 11.5}px 'Helvetica Neue', Helvetica, Arial, sans-serif`;
       const o = Q(-1, -1, -1);
       for (const [end, name] of [[Q(1.22, -1, -1), "ξ sulfuric share"], [Q(-1, -1, 1.26), "f carbonate share"], [Q(-1, 1.2, -1), "η net CO₂ drawdown"]]) {
         line(o, end);

@@ -6,15 +6,15 @@
   --rule: rgba(25, 24, 21, .16);
   --blue: #3f6473;
   --rust: #b4532a;
-  --serif: "Newsreader", Georgia, serif;
-  --mono: "Courier Prime", "Courier New", monospace;
+  /* one face for everything but the name: Helvetica (Arial where it is missing) */
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --rail: 236px;
   --gut: clamp(20px, 3.2vw, 46px);
   --edge: clamp(14px, 6.5vw, 112px);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { background: var(--paper); color: var(--ink); font: 400 18px/1.5 var(--serif); -webkit-font-smoothing: antialiased; }
+body { background: var(--paper); color: var(--ink); font: 400 17px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration-thickness: .5px; text-underline-offset: .22em; }
 img, canvas, svg { display: block; width: 100%; }
 sub, sup { font-size: .68em; line-height: 0; }
@@ -29,7 +29,7 @@ sub, sup { font-size: .68em; line-height: 0; }
 .outro .sub { margin: 0; }
 
 /* ——— the rail: a name and an index ——— */
-.rail { grid-column: 1; grid-row: 1 / span 2; position: sticky; top: 0; align-self: start; height: 100vh; padding: 30px 0 30px var(--gut); font: 400 13px/1.95 var(--mono); }
+.rail { grid-column: 1; grid-row: 1 / span 2; position: sticky; top: 0; align-self: start; height: 100vh; padding: 30px 0 30px var(--gut); font: 400 13px/1.95 var(--sans); }
 .mark { display: block; font: 400 15px/1.3 "Major Mono Display", monospace; text-transform: lowercase; text-decoration: none; }
 .rail ol { list-style: none; margin-top: 44px; }
 .rail li.gap { margin-top: 1.95em; }
@@ -41,7 +41,7 @@ footer a:hover { text-decoration: underline; }
 
 main { grid-column: 2; padding: 30px var(--gut) 0 clamp(20px, 3vw, 56px); }
 
-.statement { max-width: 38em; font-size: clamp(18px, 1.42vw, 21px); line-height: 1.5; padding-bottom: clamp(56px, 9vh, 96px); }
+.statement { max-width: 38em; font-size: clamp(17px, 1.3vw, 19px); line-height: 1.5; padding-bottom: clamp(56px, 9vh, 96px); }
 /* the bio: a portrait beside each paragraph, then an epigraph under the text */
 .statement.pair-c { max-width: none; display: grid; grid-template-columns: minmax(0, 38em) minmax(160px, 220px); gap: 1em clamp(24px, 4vw, 64px); align-items: start; }
 .statement.pair-c > p + p { margin-top: 0; }
@@ -50,7 +50,7 @@ main { grid-column: 2; padding: 30px var(--gut) 0 clamp(20px, 3vw, 56px); }
 .statement.pair-c figure:nth-of-type(2) { grid-row: span 2; } /* lets the epigraph sit right under the text, beside the photo */
 .epigraph { grid-column: 1; margin: 1.4em 0 0; padding-left: 1.2em; border-left: 1px solid var(--rule); }
 .epigraph p { font-style: italic; }
-.epigraph .by { font-style: normal; margin-top: .4em; font: 400 12.5px/1.6 var(--mono); color: var(--mute); }
+.epigraph .by { font-style: normal; margin-top: .4em; font: 400 12px/1.6 var(--sans); color: var(--mute); }
 .statement p + p { margin-top: 1em; }
 
 /* ——— works ——— */
@@ -71,21 +71,21 @@ main { grid-column: 2; padding: 30px var(--gut) 0 clamp(20px, 3vw, 56px); }
 #sulfur { aspect-ratio: 16 / 10; cursor: grab; touch-action: pan-y; }
 #sulfur:active { cursor: grabbing; }
 .plot { padding: clamp(10px, 2vw, 26px) clamp(8px, 1.6vw, 22px) clamp(6px, 1vw, 12px); }
-.plot text { font-family: var(--mono); }
+.plot text { font-family: var(--sans); }
 
 /* small type set on a plate */
-.on-plate { position: absolute; margin: 0; font: 400 12px/1.5 var(--mono); color: var(--ink); pointer-events: none; white-space: pre; }
+.on-plate { position: absolute; margin: 0; font: 400 12px/1.5 var(--sans); color: var(--ink); pointer-events: none; white-space: pre; }
 .on-plate.tl { top: 12px; left: 14px; }
 .on-plate.tr { top: 12px; right: 14px; text-align: right; }
 .month { font-size: clamp(15px, 1.5vw, 20px); letter-spacing: .08em; }
 
 /* captions: title, year; then what it is made of */
 figcaption, .cap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4px clamp(16px, 3vw, 44px); margin-top: 14px; }
-.cap .t, figcaption .t { font-size: 17px; line-height: 1.4; }
+.cap .t, figcaption .t { font-size: 16px; line-height: 1.4; }
 /* the caption proper is prose, in full ink; where the figure comes from is fine print beneath it */
-.cap .m, figcaption .m { font-size: 17px; line-height: 1.5; color: var(--ink); max-width: 38em; }
-.cap .note { grid-column: 2; margin-top: 6px; font: 400 12px/1.6 var(--mono); color: var(--mute); max-width: 56em; }
-.sub { margin-top: 8px; font: 400 12px/1.5 var(--mono); color: var(--mute); }
+.cap .m, figcaption .m { font-size: 16px; line-height: 1.5; color: var(--ink); max-width: 38em; }
+.cap .note { grid-column: 2; margin-top: 6px; font: 400 12px/1.6 var(--sans); color: var(--mute); max-width: 56em; }
+.sub { margin-top: 8px; font: 400 12px/1.5 var(--sans); color: var(--mute); }
 .sub b { font-weight: 400; color: var(--ink); }
 
 /* ——— photographs ——— */
@@ -96,16 +96,16 @@ figcaption, .cap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0
 .pubs { list-style: none; }
 .pubs > li { display: grid; grid-template-columns: 5.2em minmax(0, 1fr); padding: 18px 0; border-top: 1px solid var(--rule); }
 .pubs > li:last-child { border-bottom: 1px solid var(--rule); }
-.pubs .y { font: 400 13px/1.9 var(--mono); color: var(--mute); }
+.pubs .y { font: 400 13px/1.9 var(--sans); color: var(--mute); }
 .pubs ul { list-style: none; }
 .pubs ul li + li { margin-top: 16px; }
 .pubs a { text-decoration: none; }
 .pubs a:hover { text-decoration: underline; }
-.pubs .t { display: block; font-size: 18px; line-height: 1.35; max-width: 40em; }
-.pubs .m { display: block; margin-top: 3px; font: 400 12.5px/1.55 var(--mono); color: var(--mute); max-width: 56em; }
-h2 { font: 400 13px/1.9 var(--mono); color: var(--mute); margin-bottom: 14px; }
+.pubs .t { display: block; font-size: 17px; line-height: 1.35; max-width: 40em; }
+.pubs .m { display: block; margin-top: 3px; font: 400 12px/1.55 var(--sans); color: var(--mute); max-width: 56em; }
+h2 { font: 400 13px/1.9 var(--sans); color: var(--mute); margin-bottom: 14px; }
 
-footer { grid-column: 2; padding: 0 var(--gut) 34px clamp(20px, 3vw, 56px); font: 400 12px/1.6 var(--mono); color: var(--mute); }
+footer { grid-column: 2; padding: 0 var(--gut) 34px clamp(20px, 3vw, 56px); font: 400 12px/1.6 var(--sans); color: var(--mute); }
 
 @media (max-width: 860px) {
   .sheet { display: block; }
@@ -128,3 +128,6 @@ footer { grid-column: 2; padding: 0 var(--gut) 34px clamp(20px, 3vw, 56px); font
   .statement .portrait { order: -1; width: min(220px, 60%); margin: 0 0 6px; }
 }
 @media (max-width: 520px) { .photos { columns: 1; } }
+
+/* small labels in the same face: lightly tracked so they hold at 12–13 px */
+.rail, .pubs .y, h2, .pubs .m, .cap .note, .sub, footer, .epigraph .by, .on-plate { letter-spacing: .01em; }
